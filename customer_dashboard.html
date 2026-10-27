@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customer Dashboard - Let's Trade ZM</title>
+    <style>
+        :root {
+            --navy: #0a192f;
+            --purple: #6b21a8;
+            --cream: #fffdfa;
+            --black: #0f172a;
+            --gold: #f59e0b;
+            --border: rgba(255, 255, 255, 0.15);
+            --success: #10b981;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        body { 
+            background: linear-gradient(rgba(10, 25, 47, 0.9), rgba(10, 25, 47, 0.95)), url('assets/images/image_4.png') no-repeat center center fixed; 
+            background-size: cover; 
+            color: var(--cream); 
+            display: flex; 
+            justify-content: center; 
+            min-height: 100vh; 
+            padding: 10px; 
+        }
+        
+        .mobile-container { width: 100%; max-width: 480px; background: rgba(15, 23, 42, 0.92); border: 1px solid var(--border); border-radius: 28px; box-shadow: 0 15px 35px rgba(0,0,0,0.4); display: flex; flex-direction: column; overflow: hidden; min-height: 96vh; position: relative; backdrop-filter: blur(12px); }
+        
+        header { padding: 20px 24px; background: rgba(15, 23, 42, 0.98); display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border); }
+        .brand-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; color: var(--cream); font-weight: bold; }
+        .logo-badge { width: 42px; height: 42px; background: var(--cream); border: 2px solid var(--gold); border-radius: 50%; display: flex; align-items: center; justify-content: center; overflow: hidden; }
+        .logo-badge img { width: 100%; height: 100%; object-fit: cover; }
+        
+        .user-profile-tag { display: flex; align-items: center; gap: 8px; font-weight: 600; font-size: 0.95rem; color: var(--cream); }
+        .hamburger-btn { background: transparent; border: none; font-size: 1.5rem; cursor: pointer; color: var(--cream); padding: 4px; }
+        
+        .content { flex: 1; overflow-y: auto; padding: 20px 20px 90px 20px; }
+        
+        .section-title { font-size: 1.4rem; font-weight: 800; margin-bottom: 8px; color: var(--cream); }
+        .section-sub { font-size: 0.85rem; color: #94a3b8; margin-bottom: 16px; }
+        
+        .service-card { background: rgba(255, 255, 255, 0.04); border-radius: 16px; padding: 16px; margin-bottom: 14px; border: 1.5px solid var(--border); cursor: pointer; transition: all 0.2s ease; }
+        .service-card:hover { border-color: var(--gold); background: rgba(255,255,255,0.07); }
+        .service-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
+        .service-name { font-size: 1.05rem; font-weight: 700; color: var(--cream); }
+        
+        .badge { display: inline-block; font-size: 0.7rem; padding: 3px 8px; border-radius: 20px; font-weight: 700; }
+        .badge-active { background: #d1fae5; color: var(--success); }
+        .badge-expired { background: #fee2e2; color: #ef4444; }
+        
+        .service-meta { font-size: 0.8rem; color: #94a3b8; display: flex; justify-content: space-between; margin-top: 6px; }
+        
+        /* Modal for service details */
+        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); backdrop-filter: blur(5px); z-index: 2000; display: none; justify-content: center; align-items: center; padding: 20px; }
+        .modal-card { width: 100%; max-width: 420px; background: #0f172a; border: 1.5px solid var(--gold); border-radius: 24px; padding: 24px; box-shadow: 0 20px 40px rgba(0,0,0,0.6); position: relative; animation: popUp 0.3s ease; }
+        @keyframes popUp { from { transform: scale(0.9); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+        
+        .modal-close { position: absolute; top: 18px; right: 20px; background: transparent; border: none; font-size: 1.5rem; color: #94a3b8; cursor: pointer; }
+        .modal-close:hover { color: var(--cream); }
+        
+        .credentials-box { background: rgba(245, 158, 11, 0.1); border: 1.5px dashed var(--gold); color: #fde68a; padding: 14px; border-radius: 12px; font-size: 0.9rem; font-weight: 500; margin: 12px 0; word-break: break-all; }
+        
+        .btn-container { display: flex; gap: 10px; margin-top: 20px; }
+        .btn { flex: 1; padding: 12px; border: none; border-radius: 12px; font-size: 0.95rem; font-weight: 700; cursor: pointer; text-align: center; text-decoration: none; }
+        .btn-primary { background: var(--gold); color: var(--black); box-shadow: 0 4px 15px rgba(245,158,11,0.3); }
+        .btn-primary:hover { background: #d97706; color: white; }
+        .btn-secondary { background: transparent; color: #94a3b8; border: 1.5px solid var(--border); }
+        .btn-secondary:hover { background: rgba(255,255,255,0.05); color: var(--cream); }
+
+        .support-fab { position: fixed; bottom: 25px; right: 25px; width: 60px; height: 60px; background: var(--gold); border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 6px 20px rgba(245,158,11,0.4); cursor: pointer; z-index: 100; font-size: 1.6rem; text-decoration: none; border: 3px solid rgba(255,255,255,0.2); }
+
+        /* Slide-out Menu Drawer */
+        .drawer { position: fixed; top: 0; right: -100%; width: 100%; max-width: 420px; height: 100%; background: #0f172a; z-index: 1000; box-shadow: -5px 0 30px rgba(0,0,0,0.5); transition: right 0.3s ease; display: flex; flex-direction: column; padding: 24px; overflow-y: auto; border-left: 1px solid var(--border); }
+        .drawer.open { right: 0; }
+        .drawer-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; padding-bottom: 15px; border-bottom: 1px solid var(--border); }
+        .drawer-section { background: rgba(255,255,255,0.04); border: 1px solid var(--border); border-radius: 16px; padding: 16px; margin-bottom: 16px; }
+        .drawer-links { display: flex; flex-direction: column; gap: 14px; font-size: 1rem; font-weight: 600; color: var(--cream); }
+        .drawer-links a { text-decoration: none; color: var(--cream); display: flex; align-items: center; gap: 12px; transition: color 0.2s; }
+        .drawer-links a:hover { color: var(--gold); }
+    </style>
+</head>
+<body>
+
+<div class="mobile-container">
+    <header>
+        <a href="index.html" class="brand-logo">
+            <div class="logo-badge">
+                <img src="assets/images/image_7.png" alt="Logo">
+            </div>
+            <span style="font-size: 0.95rem;">Let's Trade</span>
+        </a>
+        <div style="display: flex; align-items: center; gap: 12px;">
+            <div class="user-profile-tag">
+                <span id="headerName">Mwiza</span>
+            </div>
+            <button class="hamburger-btn" onclick="toggleMenu(true)">☰</button>
+        </div>
+    </header>
+
+    <div class="content">
+        <h2 class="section-title">Your Services</h2>
+        <p class="section-sub">Click on any active service below to view login credentials, expiration date, and renewal options.</p>
+
+        <!-- Service Cards List -->
+        <div id="serviceCardsContainer">
+            <!-- Dynamically populated -->
+        </div>
+
+        <div style="margin-top: 20px;">
+            <a href="signup.html" class="btn btn-primary" style="display:block; text-align:center; text-decoration:none;">+ Add / Sign Up for New Service</a>
+        </div>
+    </div>
+</div>
+
+<!-- Modal for Service Details -->
+<div class="modal-overlay" id="serviceModal">
+    <div class="modal-card">
+        <button class="modal-close" onclick="closeModal()">×</button>
+        <h3 id="modalServiceName" style="font-size: 1.25rem; font-weight: 800; color: var(--cream); margin-bottom: 4px;">Service Name</h3>
+        <div style="display:flex; gap: 8px; align-items: center; margin-bottom: 14px;">
+            <span id="modalServiceType" style="font-size:0.8rem; color: #94a3b8;">Shared Account</span>
+            <span id="modalServiceStatusBadge" class="badge badge-active">Active</span>
+        </div>
+
+        <div style="font-size: 0.85rem; color: #94a3b8; margin-bottom: 4px;">Assigned Login Credentials:</div>
+        <div class="credentials-box" id="modalCredentials">
+            Loading credentials...
+        </div>
+
+        <div style="background: rgba(255,255,255,0.03); border: 1px solid var(--border); border-radius: 12px; padding: 12px; margin-bottom: 16px; font-size: 0.85rem;">
+            <div style="display:flex; justify-content:space-between; margin-bottom:6px;">
+                <span style="color:#94a3b8;">Sign-up Date:</span>
+                <strong id="modalSignupDate" style="color:var(--cream);">-</strong>
+            </div>
+            <div style="display:flex; justify-content:space-between; margin-bottom:6px;">
+                <span style="color:#94a3b8;">Expiration Date:</span>
+                <strong id="modalExpDate" style="color:var(--gold);">-</strong>
+            </div>
+            <div style="display:flex; justify-content:space-between;">
+                <span style="color:#94a3b8;">Price:</span>
+                <strong id="modalPrice" style="color:var(--cream);">-</strong>
+            </div>
+        </div>
+
+        <div class="btn-container">
+            <button class="btn btn-secondary" onclick="closeModal()">Close</button>
+            <button class="btn btn-primary" id="modalRenewBtn" onclick="renewService()">Renew Service</button>
+        </div>
+    </div>
+</div>
+
+<!-- Slide-out Menu Drawer -->
+<div class="drawer" id="navDrawer">
+    <div class="drawer-header">
+        <div style="display: flex; align-items: center; gap: 10px;">
+            <div class="logo-badge" style="width:36px; height:36px;">
+                <img src="assets/images/image_7.png" alt="Logo">
+            </div>
+            <span style="font-weight: 800; font-size: 1.1rem; color:var(--cream);" id="drawerUserName">Mwiza Kondowe</span>
+        </div>
+        <button class="hamburger-btn" onclick="toggleMenu(false)">×</button>
+    </div>
+    
+    <div class="drawer-section">
+        <div style="font-weight: 800; font-size: 1rem; color: var(--gold); margin-bottom: 10px;">Account Summary</div>
+        <div style="font-size: 0.85rem; color: #94a3b8; margin-bottom: 6px;">Manage active renewals and secure your digital subscriptions seamlessly with Let's Trade ZM.</div>
+    </div>
+
+    <div class="drawer-links">
+        <a href="customer_dashboard.html">🏠 Your Services</a>
+        <a href="signup.html">➕ Add New Service</a>
+        <a href="#" onclick="alert('Payment methods: Mobile Money / Cash / Barter.')">💳 Payment methods</a>
+        <a href="#" onclick="alert('Barter & Cash trade platform across ZM, MW, ZW.')">💡 How to get services</a>
+        <a href="index.html">🏠 Landing Page</a>
+        <a href="tel:+260971264800">📞 Contact us (+260 97 126 4800)</a>
+        <button class="btn btn-secondary" onclick="logout()" style="margin-top: 15px; border-color:#ef4444; color:#ef4444;">Logout</button>
+    </div>
+</div>
+
+<a href="tel:+260971264800" class="support-fab" title="Call Support">📞</a>
+
+<script>
+    const phone = localStorage.getItem('zm_current_user');
+    if (!phone) {
+        window.location.href = 'login.html';
+    }
+
+    let clients = JSON.parse(localStorage.getItem('zm_clients_db')) || [];
+    let clientIndex = clients.findIndex(c => c.phone === phone);
+    let client = clients[clientIndex];
+
+    if (!client) {
+        client = {
+            name: "Mwiza Kondowe",
+            phone: phone,
+            email: "mwiza@zm.com",
+            subscriptions: [
+                {
+                    service: "Netflix Premium (shared profiles)",
+                    type: "Shared",
+                    price: 65,
+                    status: "Active",
+                    signupDate: "2026-10-15",
+                    expirationDate: "2026-11-14",
+                    loginDetails: "Username: mwiza_net@zm.com | PIN: 1234",
+                    showCredentials: true
+                }
+            ]
+        };
+        clients.push(client);
+        localStorage.setItem('zm_clients_db', JSON.stringify(clients));
+        clientIndex = clients.length - 1;
+    }
+
+    const firstName = client.name.split(' ')[0];
+    document.getElementById('headerName').innerText = firstName;
+    document.getElementById('drawerUserName').innerText = client.name;
+
+    let selectedServiceIndex = null;
+
+    function renderServices() {
+        const container = document.getElementById('serviceCardsContainer');
+        container.innerHTML = '';
+
+        if (!client.subscriptions || client.subscriptions.length === 0) {
+            container.innerHTML = '<p style="color:#94a3b8; text-align:center; padding:20px;">No active services signed up yet.</p>';
+            return;
+        }
+
+        client.subscriptions.forEach((sub, idx) => {
+            const isActive = sub.status === 'Active' || !sub.status;
+            const card = document.createElement('div');
+            card.className = 'service-card';
+            card.onclick = () => openServiceModal(idx);
+            card.innerHTML = `
+                <div class="service-header">
+                    <span class="service-name">${sub.service}</span>
+                    <span class="badge ${isActive ? 'badge-active' : 'badge-expired'}">${sub.status || 'Active'}</span>
+                </div>
+                <div class="service-meta">
+                    <span>Type: ${sub.type || 'Shared'}</span>
+                    <strong style="color:var(--gold);">K${sub.price}</strong>
+                </div>
+                <div class="service-meta" style="margin-top:4px;">
+                    <span>Expires: ${sub.expirationDate || 'N/A'}</span>
+                    <span style="color:var(--cream);">Tap for details & login →</span>
+                </div>
+            `;
+            container.appendChild(card);
+        });
+    }
+
+    function openServiceModal(index) {
+        selectedServiceIndex = index;
+        const sub = client.subscriptions[index];
+
+        document.getElementById('modalServiceName').innerText = sub.service;
+        document.getElementById('modalServiceType').innerText = `${sub.type || 'Shared'} Account`;
+        
+        const badge = document.getElementById('modalServiceStatusBadge');
+        const isActive = sub.status === 'Active' || !sub.status;
+        badge.className = `badge ${isActive ? 'badge-active' : 'badge-expired'}`;
+        badge.innerText = sub.status || 'Active';
+
+        const credsBox = document.getElementById('modalCredentials');
+        if (sub.showCredentials === false) {
+            credsBox.style.color = '#ef4444';
+            credsBox.innerText = '⚠️ Access to login credentials has been temporarily restricted by admin.';
+        } else {
+            credsBox.style.color = '#fde68a';
+            credsBox.innerText = sub.loginDetails || 'Pending admin assignment...';
+        }
+
+        document.getElementById('modalSignupDate').innerText = sub.signupDate || 'N/A';
+        document.getElementById('modalExpDate').innerText = sub.expirationDate || 'N/A';
+        document.getElementById('modalPrice').innerText = `K${sub.price}`;
+
+        document.getElementById('serviceModal').style.display = 'flex';
+    }
+
+    function closeModal() {
+        document.getElementById('serviceModal').style.display = 'none';
+        selectedServiceIndex = null;
+    }
+
+    function renewService() {
+        if (selectedServiceIndex === null) return;
+        const sub = client.subscriptions[selectedServiceIndex];
+
+        let expDate = sub.expirationDate ? new Date(sub.expirationDate) : new Date();
+        if (isNaN(expDate.getTime()) || expDate < new Date()) {
+            expDate = new Date();
+        }
+        expDate.setDate(expDate.getDate() + 30);
+        sub.expirationDate = expDate.toISOString().split('T')[0];
+        sub.status = 'Active';
+
+        clients[clientIndex] = client;
+        localStorage.setItem('zm_clients_db', JSON.stringify(clients));
+
+        alert(`Renewal request recorded for ${sub.service}! New expiration date: ${sub.expirationDate}. Please ensure payment of K${sub.price} via Mobile Money.`);
+        closeModal();
+        renderServices();
+    }
+
+    function toggleMenu(open) {
+        document.getElementById('navDrawer').classList.toggle('open', open);
+    }
+
+    function logout() {
+        localStorage.removeItem('zm_current_user');
+        window.location.href = 'login.html';
+    }
+
+    renderServices();
+</script>
+</body>
+</html>

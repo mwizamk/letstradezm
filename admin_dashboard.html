@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - Let's Trade ZM</title>
+    <style>
+        :root {
+            --navy: #0a192f;
+            --purple: #6b21a8;
+            --cream: #fffdfa;
+            --black: #0f172a;
+            --gold: #f59e0b;
+            --border: rgba(255, 255, 255, 0.15);
+            --success: #10b981;
+            --danger: #ef4444;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        body { 
+            background: linear-gradient(rgba(10, 25, 47, 0.9), rgba(10, 25, 47, 0.95)), url('assets/images/image_4.png') no-repeat center center fixed; 
+            background-size: cover; 
+            color: var(--cream); 
+            padding: 10px; 
+            display: flex; 
+            justify-content: center; 
+            min-height: 100vh; 
+        }
+        .mobile-container { width: 100%; max-width: 480px; background: rgba(15, 23, 42, 0.92); border: 1px solid var(--border); border-radius: 28px; box-shadow: 0 15px 35px rgba(0,0,0,0.4); display: flex; flex-direction: column; overflow: hidden; height: 96vh; backdrop-filter: blur(12px); }
+        
+        header { padding: 16px 20px; background: rgba(15, 23, 42, 0.98); border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; }
+        header h2 { font-size: 1.2rem; font-weight: 800; color: var(--cream); }
+        .logout-btn { background: rgba(239, 68, 68, 0.2); border: 1px solid var(--danger); color: #fca5a5; padding: 6px 14px; border-radius: 10px; cursor: pointer; font-size: 0.85rem; font-weight: 700; }
+        
+        .tab-nav { display: flex; background: rgba(255,255,255,0.04); padding: 4px; border-bottom: 1px solid var(--border); gap: 4px; }
+        .tab-btn { flex: 1; padding: 10px; border: none; background: transparent; font-weight: 700; font-size: 0.85rem; color: #94a3b8; cursor: pointer; text-align: center; border-radius: 10px; transition: all 0.2s; }
+        .tab-btn.active { background: rgba(255,255,255,0.1); color: var(--cream); border: 2px solid var(--gold); }
+        
+        .tab-content { flex: 1; overflow-y: auto; padding: 16px; }
+        .tab-pane { display: none; }
+        .tab-pane.active { display: block; }
+
+        .metrics-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 16px; }
+        .metric-card { background: rgba(255,255,255,0.04); border: 1px solid var(--border); padding: 16px; border-radius: 16px; text-align: center; }
+        .metric-card h4 { font-size: 0.75rem; color: #94a3b8; text-transform: uppercase; margin-bottom: 6px; font-weight: 700; }
+        .metric-card p { font-size: 1.4rem; font-weight: 800; color: var(--gold); }
+
+        .card-item { background: rgba(255,255,255,0.04); border: 1px solid var(--border); border-radius: 16px; padding: 16px; margin-bottom: 12px; font-size: 0.9rem; }
+        .card-item h3 { font-size: 1.05rem; margin-bottom: 6px; color: var(--cream); display: flex; justify-content: space-between; align-items: center; }
+        .card-item p { color: #94a3b8; font-size: 0.85rem; margin-bottom: 8px; }
+        
+        .badge { display: inline-block; font-size: 0.7rem; padding: 3px 8px; border-radius: 6px; font-weight: 700; }
+        .badge-active { background: #d1fae5; color: var(--success); }
+        .badge-hidden { background: #fee2e2; color: #ef4444; }
+
+        .inline-form { margin-top: 8px; display: flex; gap: 8px; }
+        .inline-form input { flex: 1; padding: 8px 10px; border: 1.5px solid var(--border); border-radius: 10px; font-size: 0.8rem; outline: none; background: rgba(255,255,255,0.05); color: var(--cream); }
+        
+        .btn-sm { padding: 8px 12px; background: var(--gold); color: var(--black); border: none; border-radius: 10px; font-size: 0.8rem; cursor: pointer; font-weight: 700; }
+        .btn-sm:hover { background: #d97706; color: white; }
+        .btn-danger { background: var(--danger); color: white; width: 100%; padding: 10px; border-radius: 10px; border: none; font-weight: 700; cursor: pointer; }
+        
+        .action-btns { display: flex; gap: 6px; margin-top: 8px; }
+    </style>
+</head>
+<body>
+
+<div class="mobile-container">
+    <header>
+        <h2>Admin Portal</h2>
+        <button class="logout-btn" onclick="logoutAdmin()">Logout</button>
+    </header>
+
+    <div class="tab-nav">
+        <button class="tab-btn active" onclick="switchTab(0)">Clients</button>
+        <button class="tab-btn" onclick="switchTab(1)">Catalogs</button>
+        <button class="tab-btn" onclick="switchTab(2)">Analytics</button>
+    </div>
+
+    <div class="tab-content">
+        <!-- TAB 1: CLIENTS & SUBSCRIPTIONS -->
+        <div class="tab-pane active" id="tab-clients">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 12px;">
+                <h3 style="font-size: 1rem; font-weight: 700;">Customer Subscriptions & Credentials</h3>
+                <button class="btn-sm" onclick="openAddClientModal()">+ Add Client</button>
+            </div>
+            <div id="adminClientsList"></div>
+        </div>
+
+        <!-- TAB 2: CATALOGS -->
+        <div class="tab-pane" id="tab-catalogs">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 12px;">
+                <h3 style="font-size: 1rem; font-weight: 700;">Catalog & Price List Management</h3>
+                <button class="btn-sm" onclick="openAddCatalogItemModal()">+ Add Service</button>
+            </div>
+            <div id="adminCatalogList"></div>
+        </div>
+
+        <!-- TAB 3: ANALYTICS -->
+        <div class="tab-pane" id="tab-analytics">
+            <h3 style="margin-bottom: 12px; font-size: 1rem; font-weight: 700;">System Metrics & Valuation</h3>
+            <div class="metrics-grid">
+                <div class="metric-card">
+                    <h4>Total Clients</h4>
+                    <p id="mTotalClients">0</p>
+                </div>
+                <div class="metric-card">
+                    <h4>Active Subs</h4>
+                    <p id="mTotalSubs">0</p>
+                </div>
+                <div class="metric-card" style="grid-column: span 2;">
+                    <h4>Simulated Valuation</h4>
+                    <p id="mTotalRevenue">K0</p>
+                </div>
+            </div>
+            <div style="text-align: center; margin-top: 25px;">
+                <button class="btn-danger" onclick="resetDatabase()">Reset Simulated DB</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    if (localStorage.getItem('zm_admin_auth') !== 'true') {
+        window.location.href = 'admin.html';
+    }
+
+    function initDB() {
+        if (!localStorage.getItem('zm_clients_db')) {
+            const seed = [
+                {
+                    name: "Alice Banda",
+                    phone: "0971234567",
+                    email: "alice@gmail.com",
+                    status: "Active",
+                    subscriptions: [
+                        { 
+                            service: "Netflix Premium (shared profiles)", 
+                            type: "Shared", 
+                            price: 65, 
+                            status: "Active",
+                            signupDate: "2026-10-01",
+                            expirationDate: "2026-10-31",
+                            loginDetails: "Username: alice_net@zm.com | PIN: 4321",
+                            showCredentials: true
+                        }
+                    ]
+                }
+            ];
+            localStorage.setItem('zm_clients_db', JSON.stringify(seed));
+        }
+
+        if (!localStorage.getItem('zm_catalog_db')) {
+            const defaultCatalog = {
+                "Shared": [
+                    { service: "Netflix Premium (shared profiles)", price: 65 },
+                    { service: "Netflix Premium (private profile)", price: 100 },
+                    { service: "Prime video (All devices)", price: 80 },
+                    { service: "DSTV Stream (2 weeks)", price: 150 },
+                    { service: "Spotify", price: 60 },
+                    { service: "Apple Music slot", price: 80 },
+                    { service: "Gemini AI Plus", price: 50 }
+                ],
+                "Private": [
+                    { service: "Netflix (Mobile)", price: 160 },
+                    { service: "Netflix (Standard)", price: 350 },
+                    { service: "Netflix (Premium)", price: 399 },
+                    { service: "DSTV STREAM (Promo 🔥)", price: 250 },
+                    { service: "Spotify (Family)", price: 250 },
+                    { service: "Gemini AI (pro)", price: 150 }
+                ]
+            };
+            localStorage.setItem('zm_catalog_db', JSON.stringify(defaultCatalog));
+        }
+    }
+    initDB();
+
+    function switchTab(index) {
+        document.querySelectorAll('.tab-btn').forEach((b, i) => b.classList.toggle('active', i === index));
+        document.querySelectorAll('.tab-pane').forEach((p, i) => p.classList.toggle('active', i === index));
+        if (index === 0) loadAdminClients();
+        if (index === 1) loadAdminCatalogs();
+        if (index === 2) loadAnalytics();
+    }
+
+    function loadAdminClients() {
+        const clients = JSON.parse(localStorage.getItem('zm_clients_db')) || [];
+        const container = document.getElementById('adminClientsList');
+        container.innerHTML = '';
+
+        if (clients.length === 0) {
+            container.innerHTML = '<p style="color:#94a3b8; text-align:center; padding: 20px;">No clients registered yet.</p>';
+            return;
+        }
+
+        clients.forEach((client, clientIdx) => {
+            let subsHtml = '';
+            if (client.subscriptions && client.subscriptions.length > 0) {
+                client.subscriptions.forEach((sub, subIdx) => {
+                    const isVisible = sub.showCredentials !== false;
+                    subsHtml += `
+                        <div style="background:rgba(255,255,255,0.03); padding:10px; border-radius:10px; margin-top:8px; border:1px solid var(--border);">
+                            <div style="display:flex; justify-content:space-between; align-items:center;">
+                                <span style="font-weight:600; color:var(--cream);">${sub.service} (<strong style="color:var(--gold);">K${sub.price}</strong>)</span>
+                                <div>
+                                    <span class="badge ${isVisible ? 'badge-active' : 'badge-hidden'}">${isVisible ? 'Creds Visible' : 'Creds Hidden'}</span>
+                                    <span class="badge badge-active">${sub.status || 'Active'}</span>
+                                </div>
+                            </div>
+                            <div style="font-size:0.75rem; color:#94a3b8; margin-top:3px;">
+                                Sign: ${sub.signupDate || 'N/A'} | Exp: ${sub.expirationDate || 'N/A'}
+                            </div>
+                            <div style="font-size:0.8rem; color:var(--gold); margin-top:4px;">
+                                <strong>Login:</strong> ${sub.loginDetails || 'Pending admin assignment...'}
+                            </div>
+                            <div class="inline-form">
+                                <input type="text" id="cred-${clientIdx}-${subIdx}" placeholder="Assign login details..." value="${sub.loginDetails === 'Pending admin assignment...' ? '' : (sub.loginDetails || '')}">
+                                <button class="btn-sm" onclick="saveServiceCredentials(${clientIdx}, ${subIdx})">Save</button>
+                            </div>
+                            <div class="action-btns">
+                                <button class="btn-sm" style="background:${isVisible ? '#ef4444' : '#10b981'}; color:white;" onclick="toggleCredentialAccess(${clientIdx}, ${subIdx})">
+                                    ${isVisible ? 'Hide Access from Client' : 'Grant Access to Client'}
+                                </button>
+                                <button class="btn-sm" style="background:rgba(239, 68, 68, 0.2); color:#fca5a5; border:1px solid #ef4444;" onclick="removeService(${clientIdx}, ${subIdx})">Remove Service</button>
+                            </div>
+                        </div>
+                    `;
+                });
+            } else {
+                subsHtml = '<p style="color:#94a3b8; font-size:0.80rem;">No subscriptions.</p>';
+            }
+
+            const div = document.createElement('div');
+            div.className = 'card-item';
+            div.innerHTML = `
+                <h3>${client.name} <span class="badge badge-active">${client.status || 'Active'}</span></h3>
+                <p>📞 ${client.phone} | ✉️ ${client.email}</p>
+                <div style="margin-top:8px;">
+                    <div style="font-size:0.85rem; font-weight:700; color:var(--gold); margin-bottom:4px;">Subscriptions & Unique Logins:</div>
+                    ${subsHtml}
+                </div>
+                <div style="margin-top: 12px; display: flex; gap: 8px;">
+                    <button class="btn-sm" style="background:transparent; border:1px solid var(--border); color:var(--cream);" onclick="editClient(${clientIdx})">Edit Client Info</button>
+                    <button class="btn-sm" style="background:rgba(239, 68, 68, 0.2); color:#fca5a5; border:1px solid #ef4444;" onclick="deleteClient(${clientIdx})">Delete Client</button>
+                </div>
+            `;
+            container.appendChild(div);
+        });
+    }
+
+    function saveServiceCredentials(clientIdx, subIdx) {
+        let clients = JSON.parse(localStorage.getItem('zm_clients_db'));
+        const val = document.getElementById(`cred-${clientIdx}-${subIdx}`).value.trim();
+        clients[clientIdx].subscriptions[subIdx].loginDetails = val || 'Pending admin assignment...';
+        localStorage.setItem('zm_clients_db', JSON.stringify(clients));
+        alert('Login credentials updated successfully!');
+        loadAdminClients();
+    }
+
+    function toggleCredentialAccess(clientIdx, subIdx) {
+        let clients = JSON.parse(localStorage.getItem('zm_clients_db'));
+        const current = clients[clientIdx].subscriptions[subIdx].showCredentials;
+        clients[clientIdx].subscriptions[subIdx].showCredentials = current === false ? true : false;
+        localStorage.setItem('zm_clients_db', JSON.stringify(clients));
+        loadAdminClients();
+    }
+
+    function removeService(clientIdx, subIdx) {
+        if (confirm("Are you sure you want to remove this service subscription for the client?")) {
+            let clients = JSON.parse(localStorage.getItem('zm_clients_db'));
+            clients[clientIdx].subscriptions.splice(subIdx, 1);
+            localStorage.setItem('zm_clients_db', JSON.stringify(clients));
+            loadAdminClients();
+            loadAnalytics();
+        }
+    }
+
+    function editClient(clientIdx) {
+        let clients = JSON.parse(localStorage.getItem('zm_clients_db'));
+        const c = clients[clientIdx];
+        const newName = prompt("Edit Client Name:", c.name);
+        if (newName === null) return;
+        const newPhone = prompt("Edit Client Phone:", c.phone);
+        if (newPhone === null) return;
+        const newEmail = prompt("Edit Client Email:", c.email);
+        if (newEmail === null) return;
+
+        c.name = newName.trim() || c.name;
+        c.phone = newPhone.trim() || c.phone;
+        c.email = newEmail.trim() || c.email;
+
+        localStorage.setItem('zm_clients_db', JSON.stringify(clients));
+        alert("Client details updated successfully.");
+        loadAdminClients();
+    }
+
+    function deleteClient(clientIdx) {
+        if (confirm("Are you sure you want to delete this entire client profile?")) {
+            let clients = JSON.parse(localStorage.getItem('zm_clients_db'));
+            clients.splice(clientIdx, 1);
+            localStorage.setItem('zm_clients_db', JSON.stringify(clients));
+            loadAdminClients();
+            loadAnalytics();
+        }
+    }
+
+    function openAddClientModal() {
+        const name = prompt("Enter Client Full Name:");
+        if (!name) return;
+        const phone = prompt("Enter Client Phone Number:");
+        if (!phone) return;
+        const email = prompt("Enter Client Email Address:");
+        if (!email) return;
+        const service = prompt("Enter Initial Service Name (e.g. Netflix Premium):", "Netflix Premium (shared profiles)");
+        if (!service) return;
+        const price = parseFloat(prompt("Enter Service Price (ZMW):", "65")) || 65;
+        const login = prompt("Enter Unique Login Details:", "Username: user@zm.com | Pass: 1234");
+
+        const today = new Date();
+        const expDate = new Date();
+        expDate.setDate(today.getDate() + 30);
+
+        let clients = JSON.parse(localStorage.getItem('zm_clients_db')) || [];
+        clients.push({
+            name: name.trim(),
+            phone: phone.trim(),
+            email: email.trim(),
+            status: "Active",
+            subscriptions: [{
+                service: service.trim(),
+                type: "Shared",
+                price: price,
+                status: "Active",
+                signupDate: today.toISOString().split('T')[0],
+                expirationDate: expDate.toISOString().split('T')[0],
+                loginDetails: login ? login.trim() : 'Pending admin assignment...',
+                showCredentials: true
+            }]
+        });
+
+        localStorage.setItem('zm_clients_db', JSON.stringify(clients));
+        alert("New client added successfully!");
+        loadAdminClients();
+        loadAnalytics();
+    }
+
+    /* CATALOG MANAGEMENT FUNCTIONS */
+    function loadAdminCatalogs() {
+        const container = document.getElementById('adminCatalogList');
+        const catalogData = JSON.parse(localStorage.getItem('zm_catalog_db')) || {};
+        let html = '';
+
+        for (const [category, items] of Object.entries(catalogData)) {
+            html += `<h4 style="font-size:0.95rem; color:var(--gold); margin: 14px 0 8px 0; font-weight:700;">${category} Accounts</h4>`;
+            if (items.length === 0) {
+                html += `<p style="color:#94a3b8; font-size:0.8rem; margin-bottom:8px;">No services listed.</p>`;
+            }
+            items.forEach((i, itemIdx) => {
+                html += `
+                    <div class="card-item" style="display:flex; justify-content:space-between; align-items:center; padding:12px; margin-bottom:8px;">
+                        <div>
+                            <span style="font-weight:600; display:block; color:var(--cream);">${i.service}</span>
+                            <strong style="color:var(--gold);">K${i.price}</strong>
+                        </div>
+                        <div style="display:flex; gap:6px;">
+                            <button class="btn-sm" style="background:transparent; border:1px solid var(--border); color:var(--cream);" onclick="editCatalogItem('${category}', ${itemIdx})">Edit</button>
+                            <button class="btn-sm" style="background:rgba(239, 68, 68, 0.2); color:#fca5a5; border:1px solid #ef4444;" onclick="removeCatalogItem('${category}', ${itemIdx})">Remove</button>
+                        </div>
+                    </div>
+                `;
+            });
+        }
+        container.innerHTML = html;
+    }
+
+    function openAddCatalogItemModal() {
+        const category = prompt("Enter Account Category ('Shared' or 'Private'):", "Shared");
+        if (!category || (category !== 'Shared' && category !== 'Private')) {
+            alert("Invalid category. Must be 'Shared' or 'Private'.");
+            return;
+        }
+        const serviceName = prompt("Enter Service Name (e.g. Paramount+):");
+        if (!serviceName) return;
+        const price = parseFloat(prompt("Enter Price (ZMW):", "90"));
+        if (isNaN(price)) {
+            alert("Invalid price.");
+            return;
+        }
+
+        let catalogData = JSON.parse(localStorage.getItem('zm_catalog_db'));
+        catalogData[category].push({ service: serviceName.trim(), price: price });
+        localStorage.setItem('zm_catalog_db', JSON.stringify(catalogData));
+        alert("Service added successfully to catalog!");
+        loadAdminCatalogs();
+    }
+
+    function editCatalogItem(category, index) {
+        let catalogData = JSON.parse(localStorage.getItem('zm_catalog_db'));
+        const item = catalogData[category][index];
+
+        const newName = prompt("Edit Service Name:", item.service);
+        if (newName === null) return;
+        const newPrice = parseFloat(prompt("Edit Price (ZMW):", item.price));
+        if (isNaN(newPrice)) {
+            alert("Invalid price.");
+            return;
+        }
+
+        item.service = newName.trim() || item.service;
+        item.price = newPrice;
+
+        localStorage.setItem('zm_catalog_db', JSON.stringify(catalogData));
+        alert("Service updated successfully!");
+        loadAdminCatalogs();
+    }
+
+    function removeCatalogItem(category, index) {
+        if (confirm("Are you sure you want to remove this service from the catalog?")) {
+            let catalogData = JSON.parse(localStorage.getItem('zm_catalog_db'));
+            catalogData[category].splice(index, 1);
+            localStorage.setItem('zm_catalog_db', JSON.stringify(catalogData));
+            loadAdminCatalogs();
+        }
+    }
+
+    function loadAnalytics() {
+        const clients = JSON.parse(localStorage.getItem('zm_clients_db')) || [];
+        let totalSubs = 0;
+        let totalRev = 0;
+        clients.forEach(c => {
+            if (c.subscriptions) {
+                totalSubs += c.subscriptions.length;
+                c.subscriptions.forEach(s => totalRev += (s.price || 0));
+            }
+        });
+        document.getElementById('mTotalClients').innerText = clients.length;
+        document.getElementById('mTotalSubs').innerText = totalSubs;
+        document.getElementById('mTotalRevenue').innerText = `K${totalRev}`;
+    }
+
+    function resetDatabase() {
+        if (confirm("Are you sure you want to reset all simulated client data?")) {
+            localStorage.removeItem('zm_clients_db');
+            initDB();
+            loadAdminClients();
+            loadAnalytics();
+            alert("Database reset to defaults.");
+        }
+    }
+
+    function logoutAdmin() {
+        localStorage.removeItem('zm_admin_auth');
+        window.location.href = 'admin.html';
+    }
+
+    loadAdminClients();
+</script>
+</body>
+</html>

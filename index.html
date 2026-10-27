@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Let's Trade ZM - Plug MK Subscriptions</title>
+    <style>
+        :root {
+            --navy: #0a192f;
+            --purple: #6b21a8;
+            --cream: #fffdfa;
+            --black: #0f172a;
+            --gold: #f59e0b;
+            --border: rgba(255, 255, 255, 0.15);
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        body { 
+            background: linear-gradient(rgba(10, 25, 47, 0.9), rgba(10, 25, 47, 0.95)), url('assets/images/image_4.png') no-repeat center center fixed; 
+            background-size: cover; 
+            color: var(--cream); 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            min-height: 100vh; 
+            padding: 15px; 
+        }
+        .landing-container { width: 100%; max-width: 480px; background: rgba(15, 23, 42, 0.9); border: 1px solid var(--border); border-radius: 28px; box-shadow: 0 20px 40px rgba(0,0,0,0.5); padding: 35px 25px; backdrop-filter: blur(14px); text-align: center; }
+        
+        .brand-logo { width: 80px; height: 80px; background: var(--cream); border: 3px solid var(--gold); border-radius: 50%; display: flex; align-items: center; justify-content: center; overflow: hidden; margin: 0 auto 20px auto; box-shadow: 0 5px 20px rgba(245,158,11,0.4); }
+        .brand-logo img { width: 100%; height: 100%; object-fit: cover; }
+        
+        h1 { font-size: 1.8rem; font-weight: 800; color: var(--cream); margin-bottom: 6px; }
+        .tagline { font-size: 0.9rem; color: var(--gold); font-weight: 600; margin-bottom: 20px; text-transform: uppercase; letter-spacing: 1px; }
+        
+        p { font-size: 0.9rem; color: #94a3b8; line-height: 1.6; margin-bottom: 25px; }
+        
+        .features-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 25px; text-align: left; }
+        .feature-box { background: rgba(255,255,255,0.04); border: 1.5px solid var(--border); border-radius: 14px; padding: 14px; }
+        .feature-box h4 { font-size: 0.85rem; font-weight: 700; color: var(--cream); margin-bottom: 4px; }
+        .feature-box p { font-size: 0.75rem; color: #94a3b8; margin: 0; }
+        
+        .btn-container { display: flex; flex-direction: column; gap: 12px; }
+        .btn { padding: 14px 20px; border: none; border-radius: 14px; font-size: 1rem; font-weight: 700; cursor: pointer; transition: all 0.2s; text-decoration: none; display: flex; align-items: center; justify-content: center; gap: 8px; }
+        .btn-primary { background: var(--gold); color: var(--black); box-shadow: 0 4px 15px rgba(245, 158, 11, 0.3); }
+        .btn-primary:hover { background: #d97706; color: white; }
+        .btn-secondary { background: transparent; color: var(--cream); border: 1.5px solid var(--border); }
+        .btn-secondary:hover { background: rgba(255,255,255,0.08); border-color: var(--gold); }
+        
+        .footer-links { margin-top: 20px; font-size: 0.85rem; color: #94a3b8; }
+        .footer-links a { color: var(--gold); text-decoration: none; font-weight: 600; }
+        .footer-links a:hover { text-decoration: underline; }
+
+        .support-fab { position: fixed; bottom: 25px; right: 25px; width: 56px; height: 56px; background: var(--gold); border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 16px rgba(0,0,0,0.3); cursor: pointer; z-index: 100; font-size: 1.5rem; text-decoration: none; }
+    </style>
+</head>
+<body>
+
+<div class="landing-container">
+    <div class="brand-logo">
+        <img src="assets/images/image_7.png" alt="Let's Trade ZM Logo">
+    </div>
+    
+    <h1>Let's Trade ZM</h1>
+    <div class="tagline">Plug MK Subscriptions & Digital Services</div>
+    
+    <p>Welcome to Zambia's premier digital subscription and trade platform. Access shared or private accounts for streaming, productivity, and AI tools with secure mobile money, cash, or barter options.</p>
+
+    <div class="features-grid">
+        <div class="feature-box">
+            <h4>🎬 Streaming</h4>
+            <p>Netflix, DSTV, Prime, Spotify & Apple Music.</p>
+        </div>
+        <div class="feature-box">
+            <h4>⚡ Productivity</h4>
+            <p>Gemini AI Plus & Pro accounts.</p>
+        </div>
+    </div>
+
+    <div class="btn-container">
+        <a href="signup.html" class="btn btn-primary">✨ Get Started / Sign Up</a>
+        <a href="login.html" class="btn btn-secondary">🔑 Customer Portal Login</a>
+        <a href="admin.html" class="btn btn-secondary" style="font-size: 0.85rem; padding: 10px; color: #94a3b8;">🛡️ Admin Portal Access</a>
+    </div>
+
+    <div class="footer-links">
+        Need assistance? <a href="tel:+260971264800">Call +260 97 126 4800</a>
+    </div>
+</div>
+
+<a href="tel:+260971264800" class="support-fab" title="Call Support">📞</a>
+
+</body>
+</html>

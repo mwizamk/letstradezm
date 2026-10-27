@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customer Login - Let's Trade ZM</title>
+    <style>
+        :root {
+            --navy: #0a192f;
+            --purple: #6b21a8;
+            --cream: #fffdfa;
+            --black: #0f172a;
+            --gold: #f59e0b;
+            --border: rgba(255, 255, 255, 0.15);
+            --danger: #ef4444;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        body { 
+            background: linear-gradient(rgba(10, 25, 47, 0.9), rgba(10, 25, 47, 0.95)), url('assets/images/image_4.png') no-repeat center center fixed; 
+            background-size: cover; 
+            color: var(--cream); 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            min-height: 100vh; 
+            padding: 15px; 
+        }
+        .mobile-container { width: 100%; max-width: 420px; background: rgba(15, 23, 42, 0.9); border: 1px solid var(--border); border-radius: 24px; box-shadow: 0 15px 35px rgba(0,0,0,0.4); padding: 30px; backdrop-filter: blur(12px); }
+        
+        .brand-header { display: flex; align-items: center; gap: 12px; margin-bottom: 25px; }
+        .logo-badge { width: 48px; height: 48px; background: var(--cream); border: 2px solid var(--gold); border-radius: 50%; display: flex; align-items: center; justify-content: center; overflow: hidden; }
+        .logo-badge img { width: 100%; height: 100%; object-fit: cover; }
+        .brand-title { font-size: 1.25rem; font-weight: 800; color: var(--cream); }
+        .brand-subtitle { font-size: 0.75rem; color: #94a3b8; }
+
+        h2 { margin-bottom: 8px; font-size: 1.4rem; color: var(--cream); }
+        p { color: #94a3b8; margin-bottom: 25px; font-size: 0.9rem; line-height: 1.4; }
+        
+        .error-message { background: rgba(239, 68, 68, 0.2); color: #fca5a5; padding: 12px; border-radius: 12px; margin-bottom: 20px; font-size: 0.85rem; display: none; border: 1px solid var(--danger); text-align: center; }
+        
+        .input-group { margin-bottom: 20px; }
+        .input-group label { display: block; margin-bottom: 8px; font-weight: 600; font-size: 0.85rem; color: var(--cream); }
+        .input-group input { width: 100%; padding: 14px 16px; border: 1.5px solid var(--border); border-radius: 12px; font-size: 1rem; outline: none; background: rgba(255,255,255,0.05); color: var(--cream); }
+        .input-group input:focus { border-color: var(--gold); background: rgba(255,255,255,0.1); }
+        
+        .btn { padding: 14px 24px; border: none; border-radius: 12px; font-size: 1rem; font-weight: 700; cursor: pointer; width: 100%; background: var(--gold); color: var(--black); transition: background 0.2s; box-shadow: 0 4px 15px rgba(245, 158, 11, 0.3); }
+        .btn:hover { background: #d97706; color: white; }
+        
+        .footer-links { margin-top: 25px; text-align: center; font-size: 0.9rem; color: #94a3b8; }
+        .footer-links a { color: var(--gold); text-decoration: none; font-weight: 600; }
+        .footer-links a:hover { text-decoration: underline; }
+
+        .support-fab { position: fixed; bottom: 25px; right: 25px; width: 56px; height: 56px; background: var(--gold); border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 16px rgba(0,0,0,0.3); cursor: pointer; z-index: 100; font-size: 1.5rem; text-decoration: none; }
+    </style>
+</head>
+<body>
+
+<div class="mobile-container">
+    <div class="brand-header">
+        <div class="logo-badge">
+            <img src="assets/images/image_7.png" alt="Logo">
+        </div>
+        <div>
+            <div class="brand-title">Let's Trade ZM</div>
+            <div class="brand-subtitle">Barter & Cash Subscriptions</div>
+        </div>
+    </div>
+
+    <h2>Client Portal Login</h2>
+    <p>Enter your registered phone number to access your active subscriptions.</p>
+    
+    <div class="error-message" id="loginError">Phone number not found. Please sign up first.</div>
+
+    <form id="loginForm" onsubmit="handleLogin(event)">
+        <div class="input-group">
+            <label for="loginPhone">Phone Number</label>
+            <input type="tel" id="loginPhone" required placeholder="e.g. 0971234567">
+        </div>
+        <button type="submit" class="btn">LOGIN</button>
+    </form>
+
+    <div class="footer-links">
+        Don't have an account? <a href="signup.html">Sign Up</a> | <a href="index.html">Home</a><br><br>
+        <a href="admin.html" style="color: #94a3b8; font-size: 0.8rem;">Admin Portal →</a>
+    </div>
+</div>
+
+<a href="tel:+260971264800" class="support-fab" title="Call Support">📞</a>
+
+<script>
+    function handleLogin(event) {
+        event.preventDefault();
+        const phone = document.getElementById('loginPhone').value.trim();
+        const clients = JSON.parse(localStorage.getItem('zm_clients_db')) || [];
+        const client = clients.find(c => c.phone === phone);
+        if (client) {
+            localStorage.setItem('zm_current_user', phone);
+            window.location.href = 'customer_dashboard.html';
+        } else {
+            document.getElementById('loginError').style.display = 'block';
+        }
+    }
+</script>
+</body>
+</html>

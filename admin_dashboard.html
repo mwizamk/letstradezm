@@ -4,27 +4,30 @@
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Admin Dashboard - Let's Trade ZM</title>
 <style>
-:root{--gold:#f59e0b;--border:rgba(255,255,255,0.15);--danger:#ef4444;--success:#10b981}
-*{box-sizing:border-box;margin:0;padding:0;font-family:'Segoe UI',sans-serif}
-body{background:#0a192f;color:#fffdfa;padding:10px;display:flex;justify-content:center;min-height:100vh}
-.mobile-container{width:100%;max-width:500px;background:rgba(15,23,42,0.95);border:1px solid var(--border);border-radius:28px;display:flex;flex-direction:column;height:97vh;overflow:hidden}
-header{padding:16px 20px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center}
-.logout-btn{background:rgba(239,68,68,0.2);border:1px solid var(--danger);color:#fca5a5;padding:6px 14px;border-radius:10px;cursor:pointer;font-weight:700}
-.tab-nav{display:flex;background:rgba(255,255,255,0.04);padding:4px;gap:4px;overflow-x:auto;white-space:nowrap}
-.tab-btn{flex:1;min-width:70px;padding:9px;border:none;background:transparent;color:#94a3b8;font-weight:700;font-size:0.78rem;cursor:pointer;border-radius:10px}
-.tab-btn.active{background:rgba(255,255,255,0.1);color:white;border:2px solid var(--gold)}
+:root{--navy:#0a192f;--cream:#fffdfa;--black:#0f172a;--gold:#f59e0b;--border:rgba(255,255,255,0.15);--danger:#ef4444;--success:#10b981}
+*{box-sizing:border-box;margin:0;padding:0;font-family:'Segoe UI',Tahoma,sans-serif}
+body{background:linear-gradient(rgba(10,25,47,0.92),rgba(10,25,47,0.96)),url('assets/images/image_4.png') no-repeat center center fixed;background-size:cover;color:var(--cream);padding:8px;display:flex;justify-content:center;min-height:100vh}
+.mobile-container{width:100%;max-width:500px;background:rgba(15,23,42,0.95);border:1px solid var(--border);border-radius:28px;display:flex;flex-direction:column;height:97vh;overflow:hidden;backdrop-filter:blur(12px)}
+header{padding:14px 18px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center}
+.logout-btn{background:rgba(239,68,68,0.15);border:1px solid var(--danger);color:#fca5a5;padding:6px 14px;border-radius:10px;cursor:pointer;font-weight:700;font-size:0.8rem}
+.tab-nav{display:flex;background:rgba(255,255,255,0.04);padding:4px;gap:4px;overflow-x:auto}
+.tab-btn{flex:1;min-width:65px;padding:9px 6px;border:none;background:transparent;color:#94a3b8;font-weight:700;font-size:0.75rem;cursor:pointer;border-radius:10px;white-space:nowrap}
+.tab-btn.active{background:rgba(255,255,255,0.08);color:white;border:2px solid var(--gold)}
 .tab-content{flex:1;overflow-y:auto;padding:14px}
 .tab-pane{display:none}.tab-pane.active{display:block}
-.card-item{background:rgba(255,255,255,0.04);border:1px solid var(--border);border-radius:14px;padding:12px;margin-bottom:10px}
-.btn-sm{padding:7px 11px;background:var(--gold);color:#0f172a;border:none;border-radius:9px;font-weight:700;font-size:0.78rem;cursor:pointer}
-.form-box{background:rgba(255,255,255,0.04);border:1px solid var(--gold);border-radius:14px;padding:12px;margin-bottom:14px}
-.form-box input, .form-box select{width:100%;padding:9px;border-radius:8px;border:1px solid var(--border);background:rgba(255,255,255,0.05);color:white;margin-bottom:8px;font-size:0.85rem}
-.form-box label{font-size:0.72rem;color:#94a3b8;font-weight:600;display:block;margin-bottom:2px}
-.badge{font-size:0.65rem;padding:2px 7px;border-radius:6px;font-weight:700}
-.badge-active{background:#d1fae5;color:var(--success)}
-table{width:100%;border-collapse:collapse;font-size:0.78rem}
-th{color:#94a3b8;text-align:left;padding:6px;border-bottom:1px solid var(--border);font-size:0.7rem}
-td{padding:6px;border-bottom:1px solid rgba(255,255,255,0.05);word-break:break-all}
+.card-item{background:rgba(255,255,255,0.04);border:1px solid var(--border);border-radius:16px;padding:14px;margin-bottom:12px}
+.btn-sm{padding:8px 12px;background:var(--gold);color:var(--black);border:none;border-radius:10px;font-weight:700;font-size:0.8rem;cursor:pointer}
+.badge{display:inline-block;font-size:0.65rem;padding:3px 8px;border-radius:6px;font-weight:700}
+.badge-active{background:#d1fae5;color:var(--success)}.badge-hidden{background:#fee2e2;color:#ef4444}
+.inline-form{display:flex;gap:6px;margin-top:8px}
+.inline-form input{flex:1;padding:8px 10px;border:1.5px solid var(--border);border-radius:10px;background:rgba(255,255,255,0.05);color:white;font-size:0.78rem}
+.action-btns{display:flex;gap:6px;margin-top:8px}
+.btn-green{background:#10b981;color:white;flex:1;padding:10px;border-radius:12px;border:none;font-weight:700;cursor:pointer;font-size:0.8rem}
+.btn-red{background:rgba(239,68,68,0.12);color:#fca5a5;border:1px solid var(--danger);flex:1;padding:10px;border-radius:12px;font-weight:700;cursor:pointer;font-size:0.8rem}
+.form-box{background:rgba(255,255,255,0.04);border:1px solid var(--gold);border-radius:14px;padding:12px;margin-bottom:12px}
+.form-box input, .form-box select{width:100%;padding:9px;border-radius:9px;border:1px solid var(--border);background:rgba(255,255,255,0.05);color:white;margin-bottom:7px;font-size:0.85rem}
+.form-box label{font-size:0.7rem;color:#94a3b8;font-weight:600;display:block;margin-bottom:2px}
+table{width:100%;border-collapse:collapse;font-size:0.75rem} th{color:var(--gold);text-align:left;padding:6px;border-bottom:1px solid var(--border)} td{padding:6px;border-bottom:1px solid rgba(255,255,255,0.06);word-break:break-all}
 </style>
 </head>
 <body>
@@ -37,37 +40,49 @@ td{padding:6px;border-bottom:1px solid rgba(255,255,255,0.05);word-break:break-a
 <button class="tab-btn" onclick="switchTab(3)">Analytics</button>
 <button class="tab-btn" onclick="switchTab(4)">Settings</button>
 </div>
+
 <div class="tab-content">
-<div class="tab-pane active" id="tab-clients"><div style="display:flex;justify-content:space-between;margin-bottom:10px"><h3>Clients</h3><button class="btn-sm" onclick="openAddClientModal()">+ Add Client</button></div><div id="adminClientsList"></div></div>
+<!-- CLIENTS - OLD WORKFLOW RESTORED -->
+<div class="tab-pane active" id="tab-clients">
+<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
+<h3 style="font-size:0.95rem">Customer Subscriptions & Credentials</h3>
+<button class="btn-sm" onclick="addClient()">+ Add Client</button>
+</div>
+<div id="clientsList"><p style="color:#94a3b8;text-align:center">Loading...</p></div>
+</div>
 
+<!-- CATALOGS - SHARED / PRIVATE LIKE SCREENSHOT -->
 <div class="tab-pane" id="tab-catalogs">
-<div class="form-box"><h4 style="color:var(--gold);margin-bottom:6px">➕ Add Live Product</h4>
-<label>Title</label><input id="pTitle" placeholder="Netflix | mobile | private">
-<div style="display:grid;grid-template-columns:1fr 1fr;gap:6px"><div><label>Price K</label><input id="pPrice" type="number"></div><div><label>Location</label><input id="pLocation"></div></div>
-<button class="btn-sm" style="width:100%" onclick="addFirestoreProduct()">Add to Live</button><div id="catMsg" style="font-size:0.75rem;margin-top:6px;text-align:center"></div></div>
-<div id="adminCatalogList"></div></div>
+<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
+<h3 style="font-size:0.95rem">Catalog & Price List Management</h3>
+<button class="btn-sm" onclick="addCatalogService()">+ Add Service</button>
+</div>
+<div id="catalogShared"></div><div id="catalogPrivate"></div>
+</div>
 
+<!-- ACCOUNTS TABLE - Title, Email, password, user, Pincode -->
 <div class="tab-pane" id="tab-accounts">
-<div class="form-box"><h4 style="color:var(--gold);margin-bottom:6px">➕ Add Account (Netflix, etc.)</h4>
-<label>Title (Netflix Premium)</label><input id="aTitle" placeholder="Netflix | mobile | private account">
-<label>Email / User</label><input id="aEmail" placeholder="email or username">
-<label>Password</label><input id="aPassword" placeholder="password">
-<div style="display:grid;grid-template-columns:1fr 1fr;gap:6px"><div><label>User / Profile</label><input id="aUser" placeholder="Profile 1"></div><div><label>Pincode</label><input id="aPincode" placeholder="1234"></div></div>
-<button class="btn-sm" style="width:100%" onclick="addAccount()">Save Account</button><div id="accMsg" style="font-size:0.75rem;margin-top:6px;text-align:center"></div></div>
+<div class="form-box">
+<h4 style="color:var(--gold);margin-bottom:6px">➕ Add Account Stock</h4>
+<label>Title (e.g. Netflix Premium (private profile))</label><input id="aTitle" placeholder="Netflix Premium (private profile)">
+<label>Email</label><input id="aEmail" placeholder="mwizakata@gmail.com">
+<label>Password</label><input id="aPassword" placeholder="MWIZAMK">
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:6px"><div><label>User / Profile Name</label><input id="aUser" placeholder="Profile 1"></div><div><label>Pincode</label><input id="aPincode" placeholder="1234"></div></div>
+<button class="btn-sm" style="width:100%" onclick="addAccount()">Add to Live is not working - FIXED: Save Account</button>
+<div id="accMsg" style="font-size:0.75rem;margin-top:6px;text-align:center"></div>
+</div>
 <div id="accountsList"></div>
 </div>
 
-<div class="tab-pane" id="tab-analytics"><h3>Metrics</h3><div id="analyticsBox"></div><a href="index.html" target="_blank" style="color:var(--gold);display:block;text-align:center;margin-top:10px">View Live Site →</a></div>
+<div class="tab-pane" id="tab-analytics"><h3>Metrics</h3><div id="analyticsBox" style="margin-top:10px"></div></div>
 
 <div class="tab-pane" id="tab-settings">
-<div class="form-box"><h4 style="color:var(--gold);margin-bottom:8px">🔑 Change Admin Password At Will</h4>
-<label>Current Username</label><input id="sCurUser" disabled>
+<div class="form-box"><h4 style="color:var(--gold)">🔑 Change Admin Password At Will</h4>
 <label>New Username</label><input id="sNewUser" placeholder="admin">
 <label>New Password</label><input id="sNewPass" type="password" placeholder="New password">
-<label>Confirm Password</label><input id="sConfPass" type="password" placeholder="Confirm">
-<button class="btn-sm" style="width:100%;margin-top:6px" onclick="changeAdminCreds()">Update Password</button>
-<div id="setMsg" style="font-size:0.78rem;margin-top:8px;text-align:center"></div>
-<p style="font-size:0.7rem;color:#94a3b8;margin-top:10px">Saved on this device. Use new login next time at /admin.html. No code change needed.</p></div>
+<label>Confirm</label><input id="sConfPass" type="password">
+<button class="btn-sm" style="width:100%;margin-top:6px" onclick="changeCreds()">Update</button>
+<div id="setMsg" style="font-size:0.75rem;margin-top:6px;text-align:center"></div></div>
 </div>
 </div>
 </div>
@@ -77,33 +92,174 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.0/firebas
 import { getFirestore, collection, getDocs, addDoc, deleteDoc, updateDoc, doc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore.js";
 const firebaseConfig={apiKey:"AIzaSyBxT9skydXjXtJCvyrMelRz2oi6kuMIFu4",authDomain:"letstradezm-e6e7e.firebaseapp.com",projectId:"letstradezm-e6e7e",storageBucket:"letstradezm-e6e7e.firebasestorage.app",messagingSenderId:"689839607726",appId:"1:689839607726:web:56e78f3ca78c0f754e823f"};
 const app=initializeApp(firebaseConfig);const db=getFirestore(app);
-if(localStorage.getItem('zm_admin_auth')!=='true'){window.location.href='admin.html';}
+if(localStorage.getItem('zm_admin_auth')!=='true')location.href='admin.html';
 
-window.switchTab=(i)=>{document.querySelectorAll('.tab-btn').forEach((b,idx)=>b.classList.toggle('active',idx===i));document.querySelectorAll('.tab-pane').forEach((p,idx)=>p.classList.toggle('active',idx===i));if(i==0)loadClients();if(i==1)loadCatalogs();if(i==2)loadAccounts();if(i==3)loadAnalytics();if(i==4)loadSettings();};
+let allAccountsCache=[];
 
-// CLIENTS (localStorage)
-function initDB(){if(!localStorage.getItem('zm_clients_db')){localStorage.setItem('zm_clients_db',JSON.stringify([{name:"Alice Banda",phone:"0971234567",email:"alice@gmail.com",status:"Active",subscriptions:[{service:"Netflix Premium",price:65,status:"Active"}]}]));}}
-initDB();
-window.loadClients=()=>{const cs=JSON.parse(localStorage.getItem('zm_clients_db'))||[];document.getElementById('adminClientsList').innerHTML=cs.map(c=>`<div class="card-item"><b>${c.name}</b> <span class="badge badge-active">Active</span><br><small>${c.phone} | ${c.email}</small></div>`).join('')||'No clients';};
-window.openAddClientModal=()=>{const n=prompt("Name");if(!n)return;let cs=JSON.parse(localStorage.getItem('zm_clients_db'))||[];cs.push({name:n,phone:prompt("Phone")||'',email:prompt("Email")||'',status:"Active",subscriptions:[]});localStorage.setItem('zm_clients_db',JSON.stringify(cs));loadClients();};
+window.switchTab=(i)=>{document.querySelectorAll('.tab-btn').forEach((b,idx)=>b.classList.toggle('active',idx===i));document.querySelectorAll('.tab-pane').forEach((p,idx)=>p.classList.toggle('active',idx===i));if(i==0)loadClients();if(i==1)loadCatalogs();if(i==2)loadAccounts();if(i==3)loadAnalytics();};
 
-// CATALOGS (Firestore products)
-window.loadCatalogs=async()=>{const el=document.getElementById('adminCatalogList');try{const snap=await getDocs(collection(db,"products"));el.innerHTML='';snap.forEach(d=>{const p=d.data();el.innerHTML+=`<div class="card-item" style="display:flex;justify-content:space-between"><div><b>${p.title}</b><br><span style="color:var(--gold)">K${p.price}</span> ${p.location||''}</div><button class="btn-sm" style="background:#fee2e2;color:#ef4444" onclick="delProduct('${d.id}')">Del</button></div>`;});}catch(e){el.innerHTML=e.message;}};
-window.addFirestoreProduct=async()=>{const t=document.getElementById('pTitle').value,pr=Number(document.getElementById('pPrice').value);if(!t||!pr){document.getElementById('catMsg').textContent='Title + price needed';return;}try{await addDoc(collection(db,"products"),{title:t,price:pr,location:document.getElementById('pLocation').value||'mobile',currency:"ZMW",status:"available",createdAt:serverTimestamp()});document.getElementById('catMsg').textContent='✅ Added!';loadCatalogs();}catch(e){document.getElementById('catMsg').textContent=e.message;}};
-window.delProduct=async(id)=>{if(confirm("Delete?")){await deleteDoc(doc(db,"products",id));loadCatalogs();}};
+// ---------- ACCOUNTS TAB ----------
+window.loadAccounts=async()=>{
+ const el=document.getElementById('accountsList');
+ try{
+  const snap=await getDocs(collection(db,"accounts"));
+  allAccountsCache=[]; snap.forEach(d=>allAccountsCache.push({id:d.id,...d.data()}));
+  let html='<table><tr><th>Title</th><th>Email</th><th>Pass</th><th>User/Pin</th><th>Action</th></tr>';
+  allAccountsCache.forEach(a=>{
+   html+=`<tr><td>${a.title||''}</td><td>${a.email||''}</td><td>${a.password||''}</td><td>${a.user||''}/${a.pincode||''}</td><td><button class="btn-sm" style="padding:3px 6px" onclick="editAcc('${a.id}')">Edit</button> <button class="btn-sm" style="background:#fee2e2;color:#ef4444;padding:3px 6px" onclick="delAcc('${a.id}')">X</button></td></tr>`;
+  });
+  html+='</table>'; el.innerHTML=html || 'No accounts';
+ }catch(e){el.innerHTML='Error: '+e.message;}
+};
 
-// ACCOUNTS (Firestore accounts table)
-window.loadAccounts=async()=>{const el=document.getElementById('accountsList');try{const snap=await getDocs(collection(db,"accounts"));let html='<table><tr><th>Title</th><th>Email/User</th><th>Pass</th><th>User/Pin</th><th>Action</th></tr>';snap.forEach(d=>{const a=d.data();html+=`<tr><td>${a.title||''}</td><td>${a.email||''}</td><td>${a.password||''}</td><td>${a.user||''} / ${a.pincode||''}</td><td><button class="btn-sm" style="padding:3px 6px" onclick="editAccount('${d.id}','${(a.title||'').replace(/'/g,"")}','${(a.email||'').replace(/'/g,"")}','${(a.password||'').replace(/'/g,"")}','${(a.user||'').replace(/'/g,"")}','${(a.pincode||'').replace(/'/g,"")}')">Edit</button> <button class="btn-sm" style="background:#fee2e2;color:#ef4444;padding:3px 6px" onclick="delAccount('${d.id}')">X</button></td></tr>`;});html+='</table>';el.innerHTML=html||'No accounts';}catch(e){el.innerHTML=e.message;}};
-window.addAccount=async()=>{const data={title:document.getElementById('aTitle').value.trim(),email:document.getElementById('aEmail').value.trim(),password:document.getElementById('aPassword').value.trim(),user:document.getElementById('aUser').value.trim(),pincode:document.getElementById('aPincode').value.trim(),createdAt:serverTimestamp()};if(!data.title||!data.email){document.getElementById('accMsg').textContent='Title and Email required';return;}try{await addDoc(collection(db,"accounts"),data);document.getElementById('accMsg').textContent='✅ Saved';loadAccounts();}catch(e){document.getElementById('accMsg').textContent=e.message;}};
-window.delAccount=async(id)=>{if(confirm("Delete account?")){await deleteDoc(doc(db,"accounts",id));loadAccounts();}};
-window.editAccount=async(id,t,e,p,u,pc)=>{const nt=prompt("Title:",t);if(nt===null)return;const ne=prompt("Email/User:",e);if(ne===null)return;const np=prompt("Password:",p);if(np===null)return;const nu=prompt("User/Profile:",u);if(nu===null)return;const npi=prompt("Pincode:",pc);if(npi===null)return;try{await updateDoc(doc(db,"accounts",id),{title:nt,email:ne,password:np,user:nu,pincode:npi});loadAccounts();}catch(err){alert(err.message);}};
+window.addAccount=async()=>{
+ const data={title:document.getElementById('aTitle').value.trim(),email:document.getElementById('aEmail').value.trim(),password:document.getElementById('aPassword').value.trim(),user:document.getElementById('aUser').value.trim(),pincode:document.getElementById('aPincode').value.trim(),status:"available",createdAt:serverTimestamp()};
+ const msg=document.getElementById('accMsg');
+ if(!data.title||!data.email){msg.textContent='Title + Email required';return;}
+ try{await addDoc(collection(db,"accounts"),data);msg.style.color='#22c55e';msg.textContent='✅ Account saved';document.getElementById('aTitle').value='';document.getElementById('aEmail').value='';document.getElementById('aPassword').value='';loadAccounts();}catch(e){msg.textContent='❌ '+e.message;}
+};
+window.delAcc=async(id)=>{if(confirm('Delete account?')){await deleteDoc(doc(db,"accounts",id));loadAccounts();}};
+window.editAcc=async(id)=>{
+ const a=allAccountsCache.find(x=>x.id===id); if(!a)return;
+ const nt=prompt('Title:',a.title); if(nt===null)return;
+ const ne=prompt('Email:',a.email); if(ne===null)return;
+ const np=prompt('Password:',a.password); if(np===null)return;
+ const nu=prompt('User/Profile:',a.user); if(nu===null)return;
+ const npi=prompt('Pincode:',a.pincode); if(npi===null)return;
+ await updateDoc(doc(db,"accounts",id),{title:nt,email:ne,password:np,user:nu,pincode:npi}); loadAccounts();
+};
 
-// ANALYTICS & SETTINGS
-window.loadAnalytics=()=>{document.getElementById('analyticsBox').innerHTML=`Clients: ${JSON.parse(localStorage.getItem('zm_clients_db')||'[]').length}`;loadCatalogs();};
-window.loadSettings=()=>{document.getElementById('sCurUser').value=localStorage.getItem('zm_admin_user')||'admin';};
-window.changeAdminCreds=()=>{const nu=document.getElementById('sNewUser').value.trim();const np=document.getElementById('sNewPass').value.trim();const cp=document.getElementById('sConfPass').value.trim();const msg=document.getElementById('setMsg');if(!nu||!np){msg.style.color='#fca5a5';msg.textContent='Username and password required';return;}if(np!==cp){msg.style.color='#fca5a5';msg.textContent='Passwords do not match';return;}localStorage.setItem('zm_admin_user',nu);localStorage.setItem('zm_admin_pass',np);msg.style.color='#22c55e';msg.textContent=`✅ Updated! New login: ${nu} / ${np}`;document.getElementById('sCurUser').value=nu;};
-window.logoutAdmin=()=>{localStorage.removeItem('zm_admin_auth');window.location.href='admin.html';};
-loadClients();
+// ---------- CATALOGS TAB - FIXED ADD TO LIVE ----------
+window.loadCatalogs=async()=>{
+ const sharedEl=document.getElementById('catalogShared'); const privateEl=document.getElementById('catalogPrivate');
+ try{
+  const snap=await getDocs(collection(db,"products"));
+  let sharedHtml='<h4 style="color:var(--gold);margin:12px 0 8px">shared Accounts</h4>'; let privateHtml='<h4 style="color:var(--gold);margin:12px 0 8px">private Accounts</h4>';
+  let hasS=false,hasP=false;
+  snap.forEach(d=>{
+   const p=d.data(); const type=(p.type||p.category||'Shared').toLowerCase();
+   const card=`<div class="card-item" style="display:flex;justify-content:space-between;align-items:center"><div><b>${p.title||p.service||'Service'}</b><br><span style="color:var(--gold);font-weight:700">K${p.price||0}</span></div><div style="display:flex;gap:6px"><button class="btn-sm" style="background:transparent;border:1px solid var(--border);color:white" onclick="editCatalog('${d.id}')">Edit</button><button class="btn-sm" style="background:rgba(239,68,68,0.12);color:#fca5a5;border:1px solid var(--danger)" onclick="delCatalog('${d.id}')">Remove</button></div></div>`;
+   if(type.includes('private')){privateHtml+=card;hasP=true;}else{sharedHtml+=card;hasS=true;}
+  });
+  sharedEl.innerHTML=hasS?sharedHtml:'<p style="color:#94a3b8;font-size:0.8rem">No shared accounts yet</p>';
+  privateEl.innerHTML=hasP?privateHtml:'<p style="color:#94a3b8;font-size:0.8rem">No private accounts yet</p>';
+ }catch(e){sharedEl.innerHTML='Error: '+e.message;}
+};
+
+window.addCatalogService=async()=>{
+ const service=prompt('Service name: e.g. Netflix Premium (shared profiles)'); if(!service)return;
+ const price=parseFloat(prompt('Price K:', '65')); if(isNaN(price))return;
+ const type=prompt('Type: Shared or Private', 'Shared')||'Shared';
+ try{await addDoc(collection(db,"products"),{title:service,service:service,price:price,type:type,category:type,status:"available",createdAt:serverTimestamp()});loadCatalogs();}catch(e){alert(e.message);}
+};
+window.editCatalog=async(id)=>{
+ const ns=prompt('New name:'); if(!ns)return; const np=parseFloat(prompt('New price:')); if(isNaN(np))return;
+ try{await updateDoc(doc(db,"products",id),{title:ns,service:ns,price:np});loadCatalogs();}catch(e){alert(e.message);}
+};
+window.delCatalog=async(id)=>{if(confirm('Remove this service?')){await deleteDoc(doc(db,"products",id));loadCatalogs();}};
+
+// ---------- CLIENTS TAB - ASSIGN ACCOUNTS WORKFLOW ----------
+window.loadClients=async()=>{
+ const el=document.getElementById('clientsList');
+ // ensure accounts cached for assignment
+ if(allAccountsCache.length===0){try{const snap=await getDocs(collection(db,"accounts")); allAccountsCache=[]; snap.forEach(d=>allAccountsCache.push({id:d.id,...d.data()}));}catch{}}
+ 
+ let clients=[]; try{const snap=await getDocs(collection(db,"clients")); snap.forEach(d=>clients.push({id:d.id,...d.data()}));}catch{clients=JSON.parse(localStorage.getItem('zm_clients_db')||'[]');}
+ if(clients.length===0){el.innerHTML='<p style="color:#94a3b8;text-align:center;padding:20px">No clients yet. Click + Add Client</p>';return;}
+ el.innerHTML='';
+ clients.forEach((client,ci)=>{
+  let subsHtml='';
+  (client.subscriptions||[]).forEach((sub,si)=>{
+   const visible=sub.showCredentials!==false;
+   subsHtml+=`<div style="background:rgba(255,255,255,0.03);border:1px solid var(--border);border-radius:12px;padding:10px;margin-top:8px">
+    <div style="display:flex;justify-content:space-between"><span style="font-weight:700">${sub.service||sub.title} <span style="color:var(--gold)">(K${sub.price||0})</span></span><div><span class="badge ${visible?'badge-active':'badge-hidden'}">${visible?'Creds Visible':'Creds Hidden'}</span> <span class="badge badge-active">${sub.status||'Active'}</span></div></div>
+    <div style="font-size:0.78rem;color:#94a3b8;margin-top:4px">Sign: ${sub.signupDate||'N/A'} | Exp: ${sub.expirationDate||'N/A'}</div>
+    <div style="font-size:0.85rem;color:var(--gold);margin-top:4px"><b>Login:</b> Email: ${sub.loginEmail||sub.email||''} Password: ${sub.loginPassword||sub.password||''} ${sub.user?('| User: '+sub.user):''} ${sub.pincode?('| Pin: '+sub.pincode):''}</div>
+    <div class="inline-form"><input id="cred-${ci}-${si}" value="${sub.loginDetails||`Email: ${sub.loginEmail||''} Password: ${sub.loginPassword||''}`}" placeholder="Email: ... Password: ..."><button class="btn-sm" onclick="saveCred('${client.id||ci}',${si})">Save</button></div>
+    <div class="action-btns"><button class="${visible?'btn-red':'btn-green'}" style="${visible?'':''}" onclick="toggleCred('${client.id||ci}',${si})">${visible?'Hide':'Grant'} Access to Client</button><button class="btn-red" onclick="removeSub('${client.id||ci}',${si})">Remove Service</button></div>
+   </div>`;
+  });
+  subsHtml+=`<div class="action-btns" style="margin-top:10px"><button class="btn-sm" style="background:#10b981;color:white" onclick="assignAccountToClient('${client.id||ci}')">+ Assign Account from Accounts Tab</button><button class="btn-sm" style="background:transparent;border:1px solid var(--border);color:white" onclick="editClientInfo('${client.id||ci}')">Edit Client Info</button><button class="btn-sm" style="background:rgba(239,68,68,0.12);color:#fca5a5;border:1px solid var(--danger)" onclick="deleteClient('${client.id||ci}')">Delete Client</button></div>`;
+
+  el.innerHTML+=`<div class="card-item"><h3 style="display:flex;justify-content:space-between">${client.name} <span class="badge badge-active">${client.status||'Active'}</span></h3><p style="color:#94a3b8;font-size:0.85rem;margin:6px 0">📞 ${client.phone||''} | ✉️ ${client.email||''}</p><div style="color:var(--gold);font-weight:700;font-size:0.85rem;margin-top:8px">Subscriptions & Unique Logins:</div>${subsHtml||'<p style="color:#94a3b8;font-size:0.8rem">No subscriptions</p>'}</div>`;
+ });
+};
+
+window.addClient=async()=>{
+ const name=prompt('Client Full Name: e.g. mwiza kondowe'); if(!name)return;
+ const phone=prompt('Phone: 097...'); if(!phone)return;
+ const email=prompt('Email:'); if(!email)return;
+ const today=new Date(); const exp=new Date(); exp.setDate(today.getDate()+30);
+ try{
+  await addDoc(collection(db,"clients"),{name:name.trim(),phone:phone.trim(),email:email.trim(),status:"Active",subscriptions:[],createdAt:serverTimestamp()});
+  loadClients();
+ }catch(e){alert(e.message);}
+};
+
+window.assignAccountToClient=async(clientId)=>{
+ if(allAccountsCache.length===0){alert('No accounts in Accounts tab. Add accounts first.');return;}
+ let list=allAccountsCache.map((a,i)=>`${i+1}. ${a.title} | ${a.email} | ${a.password}`).join('\n');
+ let choice=prompt(`Select account number to assign:\n${list}\n\nEnter number (1-${allAccountsCache.length}):`); if(!choice)return;
+ let idx=parseInt(choice)-1; if(isNaN(idx)||idx<0||idx>=allAccountsCache.length){alert('Invalid');return;}
+ let acc=allAccountsCache[idx];
+ let price=parseFloat(prompt(`Price for ${acc.title}:`, '100'))||100;
+ let expDays=prompt('Expiration days from today?', '30')||'30';
+ let today=new Date(); let exp=new Date(); exp.setDate(today.getDate()+parseInt(expDays));
+ let sub={service:acc.title,title:acc.title,price:price,status:"Active",signupDate:today.toISOString().split('T')[0],expirationDate:exp.toISOString().split('T')[0],loginEmail:acc.email,loginPassword:acc.password,email:acc.email,password:acc.password,user:acc.user||'',pincode:acc.pincode||'',loginDetails:`Email: ${acc.email} Password: ${acc.password}`,showCredentials:true,accountId:acc.id};
+ try{
+  const docRef=doc(db,"clients",clientId); const snap=await getDocs(collection(db,"clients")); // simplified read-modify
+  // get client
+  let clients=[]; const allSnap=await getDocs(collection(db,"clients")); let target=null; allSnap.forEach(d=>{if(d.id===clientId)target={id:d.id,...d.data()}});
+  if(!target){alert('Client not found');return;}
+  let subs=target.subscriptions||[]; subs.push(sub);
+  await updateDoc(docRef,{subscriptions:subs});
+  // optionally mark account as assigned
+  try{await updateDoc(doc(db,"accounts",acc.id),{status:"assigned"});}catch{}
+  loadClients();
+ }catch(e){alert(e.message);}
+};
+
+window.saveCred=async(clientId,si)=>{
+ const val=document.getElementById(`cred-${clientId}-${si}`)?.value||document.getElementById(`cred-0-${si}`)?.value; // fallback
+ try{
+  let allSnap=await getDocs(collection(db,"clients")); let target=null; allSnap.forEach(d=>{if(d.id===clientId)target={id:d.id,...d.data()}});
+  if(!target){ // local fallback
+   let cs=JSON.parse(localStorage.getItem('zm_clients_db')||'[]'); cs[clientId].subscriptions[si].loginDetails=val; localStorage.setItem('zm_clients_db',JSON.stringify(cs)); loadClients(); return;
+  }
+  target.subscriptions[si].loginDetails=val; await updateDoc(doc(db,"clients",clientId),{subscriptions:target.subscriptions}); loadClients();
+ }catch(e){alert(e.message);}
+};
+window.toggleCred=async(clientId,si)=>{
+ try{let allSnap=await getDocs(collection(db,"clients")); let target=null; allSnap.forEach(d=>{if(d.id===clientId)target={id:d.id,...d.data()}}); if(!target)return;
+ target.subscriptions[si].showCredentials=!target.subscriptions[si].showCredentials; await updateDoc(doc(db,"clients",clientId),{subscriptions:target.subscriptions}); loadClients();
+ }catch(e){alert(e.message);}
+};
+window.removeSub=async(clientId,si)=>{
+ if(!confirm('Remove service?'))return;
+ try{let allSnap=await getDocs(collection(db,"clients")); let target=null; allSnap.forEach(d=>{if(d.id===clientId)target={id:d.id,...d.data()}}); if(!target)return;
+ target.subscriptions.splice(si,1); await updateDoc(doc(db,"clients",clientId),{subscriptions:target.subscriptions}); loadClients();
+ }catch(e){alert(e.message);}
+};
+window.editClientInfo=async(clientId)=>{
+ try{let allSnap=await getDocs(collection(db,"clients")); let target=null; allSnap.forEach(d=>{if(d.id===clientId)target={id:d.id,...d.data()}}); if(!target)return;
+ let nn=prompt('Name:',target.name); if(nn===null)return; let np=prompt('Phone:',target.phone); if(np===null)return; let ne=prompt('Email:',target.email); if(ne===null)return;
+ await updateDoc(doc(db,"clients",clientId),{name:nn,phone:np,email:ne}); loadClients();
+ }catch(e){alert(e.message);}
+};
+window.deleteClient=async(clientId)=>{if(!confirm('Delete client?'))return; try{await deleteDoc(doc(db,"clients",clientId)); loadClients();}catch(e){alert(e.message);}};
+
+window.loadAnalytics=async()=>{
+ try{
+  const cSnap=await getDocs(collection(db,"clients")); const pSnap=await getDocs(collection(db,"products")); const aSnap=await getDocs(collection(db,"accounts"));
+  let totalSubs=0, rev=0; cSnap.forEach(d=>{let s=d.data().subscriptions||[]; totalSubs+=s.length; s.forEach(x=>rev+=(x.price||0));});
+  document.getElementById('analyticsBox').innerHTML=`<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px"><div class="card-item" style="text-align:center"><small>TOTAL CLIENTS</small><br><b style="color:var(--gold);font-size:1.3rem">${cSnap.size}</b></div><div class="card-item" style="text-align:center"><small>ACTIVE SUBS</small><br><b style="color:var(--gold);font-size:1.3rem">${totalSubs}</b></div><div class="card-item" style="grid-column:span 2;text-align:center"><small>VALUATION</small><br><b style="color:var(--gold);font-size:1.3rem">K${rev}</b></div><div class="card-item" style="grid-column:span 2;text-align:center"><small>LIVE PRODUCTS / ACCOUNTS</small><br><b style="color:var(--gold);font-size:1.3rem">${pSnap.size} / ${aSnap.size}</b></div></div>`;
+ }catch(e){document.getElementById('analyticsBox').textContent=e.message;}
+};
+
+window.changeCreds=()=>{const nu=document.getElementById('sNewUser').value.trim();const np=document.getElementById('sNewPass').value.trim();const cp=document.getElementById('sConfPass').value.trim();const msg=document.getElementById('setMsg');if(!nu||!np||np!==cp){msg.textContent='Check username/password match';return;}localStorage.setItem('zm_admin_user',nu);localStorage.setItem('zm_admin_pass',np);msg.style.color='#22c55e';msg.textContent=`✅ Updated to ${nu}`;};
+window.logoutAdmin=()=>{localStorage.removeItem('zm_admin_auth');location.href='admin.html';};
+
+loadClients(); loadAccounts();
 </script>
 </body>
 </html>
